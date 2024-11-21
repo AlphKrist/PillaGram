@@ -307,7 +307,7 @@ const PostTestQuiz = () => {
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Good Job! Thank you for answering Post-Test!{"\n\n"}You unlocked 'Readify'!</Text>
+            <Text style={styles.modalTitle}>Good Job! Thank you for answering the Post-Test!{"\n\n"}You unlocked 'Readify'!</Text>
             <Icon name="checkmark-circle-outline" size={80} color="#c67b88" />
             <Text style={styles.modalText}>You scored {score}/{questions.length}</Text>
 

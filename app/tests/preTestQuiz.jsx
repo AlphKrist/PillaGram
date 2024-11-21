@@ -188,12 +188,12 @@ const PreTestQuiz = () => {
     },
     {
       id: 15,
-      text: '15. In the sentence, "After a long hike, they were exhausted," what does "exhausted" most likely mean?',
+      text: '15. Identify the error in the sentence below:\n\n"Each of the participants were given a certificate of appreciation."',
       options: [
-        { id: 1, text: 'Very tired', correct: true },
-        { id: 2, text: 'Full of energy', correct: false },
-        { id: 3, text: 'Angry', correct: false },
-        { id: 4, text: 'Hungry', correct: false },
+        { id: 1, text: 'No error', correct: false },
+        { id: 2, text: 'Replace "were" with "was"', correct: true },
+        { id: 3, text: 'Replace "Each" with "All"', correct: false },
+        { id: 4, text: 'Replace "certificate" with "certificates"', correct: false },
       ],
     },
     // Add more questions here...
@@ -309,7 +309,7 @@ const PreTestQuiz = () => {
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Good Job! Thank you for answering Pre-Test!{"\n\n"}You unlocked 'Courses'!</Text>
+            <Text style={styles.modalTitle}>Good Job! Thank you for answering the Pre-Test!{"\n\n"}You unlocked 'Courses'!</Text>
             <Icon name="checkmark-circle-outline" size={80} color="#c67b88" />
             <Text style={styles.modalText}>You scored {score}/{questions.length}</Text>
 

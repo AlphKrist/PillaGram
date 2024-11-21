@@ -73,175 +73,58 @@ const StoryLesson2 = () => {
         <View style={styles.storyContainer}>
           <ScrollView style={styles.scrollContainer}>
             <Text style={styles.paragraph}>
-              One rainy afternoon, Emily was sitting in her room, staring out the window.
-            </Text>
-
-            {/* Custom positioning for the first row of images */}
-            <View style={styles.imageRow}>
-              <Image
-                source={designs.bed} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition1]} // Custom position for this image
-              />
-              <Image
-                source={designs.staring} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition2]} // Custom position for this image
-              />
-              <Image
-                source={designs.window} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition3]} // Custom position for this image
-              />
-            </View>
-
-            <Text style={styles.paragraph}>
-              The raindrops danced down the glass, creating a blur of the world outside.
-            </Text>
-
-            {/* Custom positioning for a standalone image */}
-            <Image
-              source={designs.umuulan3} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition4]} // Custom position for this image
-            />
-
-            <Text style={styles.paragraph}>
+              One rainy afternoon, Emily was sitting in her room, staring out the window.{"\n\n"}
+              The raindrops danced down the glass, creating a blur of the world outside.{"\n\n"}
             Feeling restless, she decided to take a walk to clear her mind. 
             </Text>
-
-            <View style={styles.imageRow}>
-              <Image
-                source={designs.house} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition5]} // Custom position for this image
-              />
-              <Image
-                source={designs.girl} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition6]} // Custom position for this image
-              />
-            </View>
-
+      
             <Text style={styles.paragraph}>
             She pulled on her boots and grabbed her umbrella, hoping the rain would let up. 
             </Text>
-
-            <Image
-              source={designs.umuulan} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition4]} // Custom position for this image
-            />
 
             <Text style={styles.paragraph}>
             As she walked through the park, the sky began to darken even more, and a rumble of thunder echoed in the distance.  
             </Text>
 
-            <View style={styles.imageRow}>
-              <Image
-                source={designs.umuulan2} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition8]} // Custom position for this image
-              />
-              <Image
-                source={designs.umuulan3} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition7]} // Custom position for this image
-              />
-            </View>
-
             <Text style={styles.paragraph}>
             Just as she was about to turn back, she noticed something shiny near the old oak tree. Curiosity piqued.
             </Text>
 
-            <View style={styles.imageRow}>
-              <Image
-                source={designs.girl2} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition9]} // Custom position for this image
-              />
-              <Image
-                source={designs.tree} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition10]} // Custom position for this image
-              />
-            </View>
-
             <Text style={styles.paragraph}>
             Emily walked over to investigate. To her surprise, she found a small, ornate key lying in the mud.
-            </Text>
-
-            <Image
-              source={designs.key} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition11]} // Custom position for this image
-            />
+            </Text>     
 
             <Text style={styles.paragraph}>
             Intrigued, she picked it up and examined it closely.
             </Text>
 
-            <View style={styles.imageRow}>
-              <Image
-                source={designs.hand} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition12]} // Custom position for this image
-              />
-              <Image
-                source={designs.key} // Replace with your specific image path
-                style={[styles.storyImage, styles.customImagePosition13]} // Custom position for this image
-              />
-            </View>
-
             <Text style={styles.paragraph}>
             It was unlike any key she had ever seen, with intricate designs carved into its surface. Without thinking, she decided to look for what the key might unlock.
             </Text>
-
-            <Image
-              source={designs.key2} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition4]} // Custom position for this image
-            />
 
             <Text style={styles.paragraph}>
             As she wandered deeper into the park, she stumbled upon a hidden gate covered in vines. The gate looked ancient, and Emily's heart raced with excitement.
             </Text>
 
-            <Image
-              source={designs.vines} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition14]} // Custom position for this image
-            />
-
             <Text style={styles.paragraph}>
             With trembling hands, she inserted the key into the lock.
             </Text>
-
-            <Image
-              source={designs.girlkey} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition14]} // Custom position for this image
-            />
 
             <Text style={styles.paragraph}>
             To her amazement, it turned smoothly, and the gate creaked open
             </Text>
 
-            <Image
-              source={designs.gate} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition6]} // Custom position for this image
-            />
-
             <Text style={styles.paragraph}>
             Beyond it lay a beautiful, enchanted garden filled with vibrant flowers and glowing lights. 
             </Text>
-
-            <Image
-              source={designs.garden} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition15]} // Custom position for this image
-            />
 
             <Text style={styles.paragraph}>
             Emily stepped through the gate, feeling as though she had entered a different world. 
             </Text>
 
-            <Image
-              source={designs.girl6} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition6]} // Custom position for this image
-            />
-
             <Text style={styles.paragraph}>
             Little did she know, this unexpected journey would change her life forever.
             </Text>
-
-            <Image
-              source={designs.garden2} // Replace with your specific image path
-              style={[styles.storyImage, styles.customImagePosition15]} // Custom position for this image
-            />
 
             <Link href="/storyCourse/storyBeforeQuiz2" style={styles.nextButton}>
               <View style={styles.nextButtonContent}>
