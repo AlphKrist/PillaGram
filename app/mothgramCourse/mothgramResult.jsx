@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  BackHandler
 } from 'react-native';
 import { designs } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
@@ -24,6 +25,18 @@ const MothgramResult = () => {
   // Parse the JSON strings into objects
   const questions = JSON.parse(questionsStr);
   const selectedOptions = JSON.parse(selectedOptionsStr);
+  useEffect(() => {
+    const handleBackPress = () => {
+      return true; // Block the back button
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
 
   return (
     <SafeAreaView style={styles.wrapper}>

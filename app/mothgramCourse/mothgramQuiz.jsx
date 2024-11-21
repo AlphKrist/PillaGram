@@ -95,7 +95,7 @@ const MothgramQuiz = () => {
   const questions = [
     {
       id: 1,
-      text: 'Last Saturday, Lily _____ (discover) a small puppy wandering alone in her neighborhood.',
+      text: "Last Saturday, Lily \_\_\_\_ [discover] a small puppy wandering alone in her neighborhood.",
       options: [
         { id: 1, text: 'discover', correct: false },
         { id: 2, text: 'discovered', correct: true },
@@ -105,7 +105,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 2,
-      text: 'The puppy looked scared and hungry, so she ______ (decide) to take it home',
+      text: "The puppy looked scared and hungry, so she \_\_\_\_ [decide] to take it home",
       options: [
         { id: 1, text: 'decide', correct: false },
         { id: 2, text: 'decided', correct: true },
@@ -115,7 +115,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 3,
-      text: "Lily ______ (name) the puppy Max",
+      text: "Lily \_\_\_\_ [name] the puppy Max",
       options: [
         { id: 1, text: 'put a name', correct: false },
         { id: 2, text: 'naming', correct: false },
@@ -125,7 +125,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 4,
-      text: "Lily _____ (give) Max some food and water.",
+      text: "Lily \_\_\_\_ [give] Max some food and water.",
       options: [
         { id: 1, text: 'gave', correct: true },
         { id: 2, text: 'gives', correct: false },
@@ -135,7 +135,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 5,
-      text: "After feeding him, she __________ (realize) that Max __________ (be) lost.",
+      text: "After feeding him, she \_\_\_\_ [realize] that Max \_\_\_\_ [be] lost.",
       options: [
         { id: 1, text: 'realized, has been', correct: false },
         { id: 2, text: 'had realized, had been', correct: false },
@@ -145,7 +145,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 6,
-      text: "She ___ (ask) her neighbors if they _____ (see) him before",
+      text: "She \_\_\_\_ [ask] her neighbors if they \_\_\_\_ [see] him before",
       options: [
         { id: 1, text: 'asked, saw', correct: true },
         { id: 2, text: 'did ask, seen', correct: false },
@@ -155,7 +155,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 7,
-      text: "No one ____ (know) where he came from, but they all _____ (offer) to help her look for his owner.",
+      text: "No one \_\_\_\_ [know] where he came from, but they all \_\_\_\_ [offer] to help her look for his owner.",
       options: [
         { id: 1, text: 'knew, offered', correct: true },
         { id: 2, text: 'have known, offered', correct: false },
@@ -165,7 +165,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 8,
-      text: "As they ____ (search) the neighborhood, Lily ____ (feel) a sense of hope.",
+      text: "As they \_\_\_\_ [search] the neighborhood, Lily \_\_\_\_ [feel] a sense of hope.",
       options: [
         { id: 1, text: 'searches, feels', correct: false },
         { id: 2, text: 'searched, felt', correct: true },
@@ -175,7 +175,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 9,
-      text: "Finally, they ____ (find) a little boy who ___ (call) out for Max.",
+      text: "Finally, they \_\_\_\_ [find] a little boy who \_\_\_\_ [call] out for Max.",
       options: [
         { id: 1, text: 'have find, calls', correct: false },
         { id: 2, text: 'found, had call', correct: false },
@@ -185,7 +185,7 @@ const MothgramQuiz = () => {
     },
     {
       id: 10,
-      text: "The boy ______ (be) overjoyed to be reunited with his puppy, and Lily ____ (feel) happy knowing she ____ (help) bring them back together.",
+      text: "The boy \_\_\_\_ [be] overjoyed to be reunited with his puppy, and Lily \_\_\_\_ [feel] happy knowing she \_\_\_\_ [help] bring them back together.",
       options: [
         { id: 1, text: 'had been, felt, have helped', correct: true },
         { id: 2, text: 'has been, had felt, had help', correct: false },
@@ -303,7 +303,6 @@ const MothgramQuiz = () => {
         </ScrollView>
         </View>
 
-        {/* Result modal */}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
           <View style={styles.modalView}>
@@ -312,18 +311,21 @@ const MothgramQuiz = () => {
             <Text style={styles.modalText}>You scored {score}/{questions.length}</Text>
             <Text style={styles.modalText}>You earned {score * 10} Petals 🌸</Text>
 
-            {/* See Answers button */}
-            <Link href={{
-              pathname: '/mothgramCourse/mothgramResult',
-              params: {
-                score,
-                questions: JSON.stringify(questions),
-                selectedOptions: JSON.stringify(selectedOptions),
-              },
-            }} onPress={() => setModalVisible(false)}
-            style={styles.seeAnswersButton}>
-              <Text style={styles.seeAnswersButtonText}>See Answers</Text>
+            <Link
+            href={{
+            pathname: '/mothgramCourse/mothgramResult',
+            params: {
+              score,
+              questions: JSON.stringify(questions),
+              selectedOptions: JSON.stringify(selectedOptions),
+            },
+            }}
+            onPress={() => setModalVisible(false)}
+            style={styles.seeAnswersButton}
+            >
+            <Text style={styles.seeAnswersButtonText}>See Answers</Text>
             </Link>
+
 
             <TouchableOpacity onPress={handleNextLesson} style={styles.continueButton}>
             <Text style={styles.continueButtonText}>Next</Text>

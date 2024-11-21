@@ -96,7 +96,7 @@ const GrambearQuiz = () => {
     },
     {
       id: 2,
-      text: 'The children __________ (play) in the garden when it started to rain.',
+      text: 'The children \_\_\_\_ [play] in the garden when it started to rain.',
       options: [
         { id: 1, text: 'Was playing', correct: false },
         { id: 2, text: 'Were playing', correct: true },
@@ -116,7 +116,7 @@ const GrambearQuiz = () => {
     },
     {
       id: 4,
-      text: "She __________ (study) for her exams last night.",
+      text: "She \_\_\_\_ [study] for her exams last night.",
       options: [
         { id: 1, text: 'Studied', correct: true },
         { id: 2, text: 'Studies', correct: false },
@@ -156,7 +156,7 @@ const GrambearQuiz = () => {
     },
     {
       id: 8,
-      text: "After they ____________ (finish) dinner, they went for a walk.",
+      text: "After they \_\_\_\_ [finish] dinner, they went for a walk.",
       options: [
         { id: 1, text: 'Had finished', correct: true },
         { id: 2, text: 'Finishing', correct: false },
@@ -176,7 +176,7 @@ const GrambearQuiz = () => {
     },
     {
       id: 10,
-      text: "\"At 5 PM, I _____________ (watch) a movie.\"",
+      text: "\"At 5 PM, I \_\_\_\_ [watch] a movie.\"",
       options: [
         { id: 1, text: 'Was watching', correct: true },
         { id: 2, text: 'Is watching', correct: false },
@@ -293,7 +293,6 @@ const GrambearQuiz = () => {
         </ScrollView>
         </View>
 
-        {/* Result modal */}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
           <View style={styles.modalView}>
@@ -302,7 +301,6 @@ const GrambearQuiz = () => {
             <Text style={styles.modalText}>You scored {score}/{questions.length}</Text>
             <Text style={styles.modalText}>You earned {score * 10} Petals 🌸</Text>
 
-            {/* See Answers button */}
             <Link href={{
               pathname: '/grambearCourse/grambearResult',
               params: {
@@ -310,11 +308,11 @@ const GrambearQuiz = () => {
                 questions: JSON.stringify(questions),
                 selectedOptions: JSON.stringify(selectedOptions),
               },
-            }} style={styles.seeAnswersButton}>
+            }} onPress={() => setModalVisible(false)} 
+            style={styles.seeAnswersButton}>
               <Text style={styles.seeAnswersButtonText}>See Answers</Text>
             </Link>
 
-            {/* Continue button */}
             <TouchableOpacity  style={styles.continueButton} onPress={handleContinue}>
               <Text style={styles.continueButtonText}>Continue</Text>
             </TouchableOpacity>
