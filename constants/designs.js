@@ -86,7 +86,6 @@ import allan from "../assets/designs/allan.png";
 import jandi from "../assets/designs/jandi.png";
 import shane from "../assets/designs/shane.png";
 import jandi2 from "../assets/designs/jandi2.png";
-import shane3 from "../assets/designs/shane3.png";
 import confetti from "../assets/designs/confetti.gif";
 
 export default {
@@ -178,6 +177,5 @@ export default {
     jandi,
     shane,
     jandi2,
-    shane3,
     confetti
 };
