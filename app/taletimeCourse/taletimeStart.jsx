@@ -8,7 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const TaletimeStart = () => {
   const navigation = useNavigation();
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const courseId = 'taletimeCourse';
   const lessonId = 'taletimeStart';
   const startTimeRef = useRef(null);
@@ -57,33 +57,33 @@ const TaletimeStart = () => {
   };
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
       {/* Back button positioned at the top left */}
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={darkMode ? styles.backButtonDark : styles.backButton}>
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
 
       {/* Main content */}
-      <View style={styles.container}>
+      <View style={darkMode ? styles.containerDark : styles.container}>
         {/* Lecture title */}
-        <Text style={styles.title}>Lecture for Grammar</Text>
+        <Text style={darkMode ? styles.titleDark : styles.title}>Lecture for Grammar</Text>
 
         {/* Whale icon */}
-        <Image source={designs.dolphin} style={styles.icon} />
+        <Image source={darkMode ? designs.dolphindark : designs.dolphin} style={styles.icon} />
 
         {/* Description */}
-        <Text style={styles.description}>
+        <Text style={darkMode ? styles.descriptionDark : styles.description}>
           Short Lecture on{"\n"}
           Context Clues in{"\n"}Reading Narrative Texts
         </Text>
 
         {/* Cloud icons */}
         <View style={styles.cloudContainer}>
-          <Image source={designs.divider} style={styles.cloudIcon} />
+          <Image source={darkMode ? designs.darkcloud : designs.divider} style={styles.cloudIcon} />
         </View>
 
         {/* Next button */}
-        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+        <TouchableOpacity onPress={handleNext} style={darkMode ? styles.nextButtonDark : styles.nextButton}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -96,12 +96,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFE6F2', // Light pink background
   },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
   backButton: {
     position: 'absolute',
     top: 45,
     left: 20,
     padding: 10,
     backgroundColor: '#eac2cf',
+    borderRadius: 10,
+    zIndex: 10,
+  },
+  backButtonDark: {
+    position: 'absolute',
+    top: 45,
+    left: 20,
+    padding: 10,
+    backgroundColor: '#5C6898',
     borderRadius: 10,
     zIndex: 10,
   },
@@ -118,7 +131,16 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     backgroundColor: '#fff7f9',
     borderRadius: 20,
-    
+    alignItems: 'center',
+  },
+  containerDark: {
+    flex: 1,
+    padding: 20,
+    marginTop: 100,
+    marginHorizontal: 20,
+    marginBottom: 30,
+    backgroundColor: '#d1d5fa',
+    borderRadius: 20,
     alignItems: 'center',
   },
   icon: {
@@ -145,6 +167,23 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     top: 90,
   },
+  titleDark: {
+    fontSize: 32,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
+    textAlign: 'center',
+    marginBottom: 10,
+    top: 50,
+  },
+  descriptionDark: {
+    fontSize: 28,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
+    textAlign: 'center',
+    lineHeight: 28,
+    marginBottom: 30,
+    top: 90,
+  },
   highlight: {
     fontFamily: 'Quicksand-Bold',
   },
@@ -156,11 +195,23 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     top: 100,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     marginHorizontal: 5,
   },
   nextButton: {
     backgroundColor: '#eac2cf',
+    padding: 10,
+    borderRadius: 15,
+    top: 150,
+    width: 200,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    flexDirection: 'row',
+  },
+  nextButtonDark: {
+    backgroundColor: '#5C6898',
     padding: 10,
     borderRadius: 15,
     top: 150,

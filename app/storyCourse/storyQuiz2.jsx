@@ -107,9 +107,9 @@ const StoryQuiz2 = () => {
       text: 'What did Emily find near the old oak tree?',
       options: [
         { id: 1, text: 'A beautiful flower.', correct: false },
-        { id: 2, text: 'A small, ornate key.', correct: false },
+        { id: 2, text: 'A small, ornate key.', correct: true },
         { id: 3, text: 'An old book.', correct: false },
-        { id: 4, text: 'A lost pet.', correct: true },
+        { id: 4, text: 'A lost pet.', correct: false },
       ],
     },
     {
@@ -117,8 +117,8 @@ const StoryQuiz2 = () => {
       text: "What was unusual about the key Emily found?",
       options: [
         { id: 1, text: 'It was very large.', correct: false },
-        { id: 2, text: 'It was covered in mud.', correct: true },
-        { id: 3, text: 'It had intricate designs on it.', correct: false },
+        { id: 2, text: 'It was covered in mud.', correct: false },
+        { id: 3, text: 'It had intricate designs on it.', correct: true },
         { id: 4, text: 'It was made of plastic.', correct: false },
       ],
     },

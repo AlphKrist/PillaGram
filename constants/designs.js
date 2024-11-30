@@ -87,6 +87,7 @@ import jandi from "../assets/designs/jandi.png";
 import shane from "../assets/designs/shane.png";
 import jandi2 from "../assets/designs/jandi2.png";
 import confetti from "../assets/designs/confetti.gif";
+import darkcloud from "../assets/designs/darkcloud.png";
 
 export default {
     design1,
@@ -177,5 +178,6 @@ export default {
     jandi,
     shane,
     jandi2,
-    confetti
+    confetti,
+    darkcloud
 };

@@ -9,7 +9,7 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 
 const GrambearCongrats = () => {
   const navigation = useNavigation();
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const courseId = 'grambearCourse';
   const lessonId = 'grambearCongrats';
   const startTimeRef = useRef(null);
@@ -65,16 +65,16 @@ const GrambearCongrats = () => {
   );
   
   return (
-    <SafeAreaView style={styles.wrapper}>
-      <View style={styles.container}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
+      <View style={darkMode   ? styles.containerDark : styles.container}>
 
-        <View style={styles.lessonContainer}>
+        <View style={darkMode ? styles.lessonContainerDark : styles.lessonContainer}>
           
-          <Text style={styles.title}>CONGRATS!</Text>
-          <Text style={styles.title2}>For completing GramBear!</Text>
-          <Image source={designs.grambearpink} style={styles.treeImage} />
+          <Text style={darkMode ? styles.titleDark : styles.title}>CONGRATS!</Text>
+          <Text style={darkMode ? styles.title2Dark : styles.title2}>For completing GramBear!</Text>
+          <Image source={darkMode ? designs.design10 : designs.grambearpink} style={styles.treeImage} />
 
-            <Link href="/(tabs)/time" style={styles.nextButton}>
+            <Link href="/(tabs)/time" style={darkMode ? styles.nextButtonDark : styles.nextButton}>
               <View style={styles.nextButtonContent}>
                 <Text style={styles.nextButtonText}>Back to Home</Text>
               </View>
@@ -239,6 +239,63 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'BarlowSemiCondensed-ExtraBold',
     color: '#c67b88',
+    textAlign: 'center',
+    marginBottom: 20,
+    bottom: 10,
+  },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
+containerDark: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#5C6898',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 50,
+    marginBottom: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
+lessonContainerDark: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#d1d5fa',
+    padding: 20,
+    marginBottom: 5,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+nextButtonDark: {
+    backgroundColor: '#5C6898',
+    padding: 10,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginTop: 20,
+    alignSelf: 'center',
+    width: 250,
+  },
+titleDark: {
+    fontSize: 36,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  title2Dark: {
+    fontSize: 24,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
     textAlign: 'center',
     marginBottom: 20,
     bottom: 10,

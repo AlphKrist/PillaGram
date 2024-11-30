@@ -10,7 +10,7 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 
 const GrambearStart = () => {
   const navigation = useNavigation();
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const courseId = 'grambearCourse';
   const lessonId = 'grambearStart';
   const startTimeRef = useRef(null);
@@ -59,26 +59,26 @@ const GrambearStart = () => {
   };
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
       {/* Back button positioned at the top left of the screen */}
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={darkMode ? styles.backButtonDark : styles.backButton}>
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
 
       {/* Main content container */}
-      <View style={styles.container}>
+      <View style={darkMode ? styles.containerDark : styles.container}>
         {/* Row for image and "Lecture for Grammar" */}
         <View style={styles.row}>
           <Image
-            source={designs.grambearpink} // Replace with actual bear image path
+            source={darkMode  ? designs.design10 : designs.grambearpink} // Replace with actual bear image path
             style={styles.image}
           />
-          <Text style={styles.title}>Lecture for Grammar</Text>
+          <Text style={darkMode ? styles.titleDark : styles.title}>Lecture for Grammar</Text>
         </View>
 
-        <Text style={styles.part}>Part 1</Text>
-        <Text style={styles.subtext}>Verbs in the{"\n"}Past Tense</Text>
-        <Link href="/grambearCourse/grambearLesson" style={styles.nextButton}>    
+        <Text style={darkMode ? styles.partDark : styles.part}>Part 1</Text>
+        <Text style={darkMode ? styles.subtextDark : styles.subtext}>Verbs in the{"\n"}Past Tense</Text>
+        <Link href="/grambearCourse/grambearLesson" style={darkMode ? styles.nextButtonDark : styles.nextButton}>    
           <Text style={styles.nextButtonText}>Next</Text>
           </Link>
       </View>
@@ -91,6 +91,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffe8f0',
   },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
   backButton: {
     position: 'absolute',
     top: 45,
@@ -99,6 +103,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#eac2cf',
     borderRadius: 10,
     zIndex: 10, // Ensure it's above the content
+  },
+  backButtonDark: {
+    position: 'absolute',
+    top: 45,
+    left: 20,
+    padding: 10,
+    backgroundColor: '#5C6898',
+    borderRadius: 10,
+    zIndex: 10,
   },
   backButtonText: {
     color: '#fff',
@@ -109,6 +122,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff7f9',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 100,
+    marginBottom: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  containerDark: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#d1d5fa',
     borderRadius: 10,
     margin: 20,
     marginTop: 100,
@@ -152,6 +180,34 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: '#eac2cf',
+    padding: 15,
+    borderRadius: 40,
+    width: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  titleDark: {
+    fontSize: 42,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
+  },
+  partDark: {
+    fontSize: 80,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
+    marginVertical: 5,
+    marginTop: 80,
+  },
+  subtextDark: {
+    fontSize: 32,
+    fontFamily: 'BarlowSemiCondensed-Regular',
+    color: '#5C6898',
+    marginBottom: 100,
+    textAlign: 'center',
+  },
+  nextButtonDark: {
+    backgroundColor: '#5C6898',
     padding: 15,
     borderRadius: 40,
     width: 200,

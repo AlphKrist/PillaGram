@@ -10,7 +10,7 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 
 const GrambearLesson = () => {
   const navigation = useNavigation();
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const courseId = 'grambearCourse';
   const lessonId = 'grambearLesson';
   const startTimeRef = useRef(null);
@@ -59,31 +59,31 @@ const GrambearLesson = () => {
   };
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
       {/* Back button positioned at the top left of the screen */}
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={darkMode ? styles.backButtonDark : styles.backButton}>
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
 
       {/* Main content container */}
-      <View style={styles.container}>
+      <View style={darkMode ? styles.containerDark : styles.container}>
         {/* Row for image and "Understanding Past Tense Verbs" */}
         <View style={styles.row}>
           <Image
-            source={designs.grambearpink} // Replace with the bear image path
+            source={darkMode ? designs.design10 : designs.grambearpink} // Replace with the bear image path
             style={styles.image}
           />
-          <Text style={styles.title}>Understanding{"\n"}Past Tense Verbs</Text>
+          <Text style={darkMode ? styles.titleDark : styles.title}>Understanding{"\n"}Past Tense Verbs</Text>
         </View>
 
         {/* Scrollable lesson content */}
-        <View style={styles.lessonContainer}>
+        <View style={darkMode ? styles.lessonContainerDark : styles.lessonContainer}>
             <ScrollView style={styles.scrollContainer}>
-              <Text style={styles.lessonText}>
+              <Text style={darkMode ? styles.lessonTextDark : styles.lessonText}>
                 The <Text style={styles.highlight}>past tense</Text> is crucial for storytelling and recounting events that have already occurred.{"\n\n"}
                 It allows us to convey actions that are completed, providing context and clarity.{"\n\n"}
                 Here, we will explore the different forms of past tense verbs in more detail, with examples.{"\n\n"}
-                <Text style={styles.lessonSubHeading}>1. Simple Past Tense</Text>{"\n\n"}
+                <Text style={darkMode ? styles.lessonSubHeadingDark : styles.lessonSubHeading}>1. Simple Past Tense</Text>{"\n\n"}
                 The simple past tense describes actions that were completed at a specific time in the past. The structure is typically the base verb + -ed for regular verbs.{"\n\n"}
                 <Text style={styles.highlight}>Regular Verbs:{"\n\n"}</Text>
                 <Text style={styles.highlight}>Walk</Text> <Icon name="arrow-forward" size={12} color="#5C6898"/> Walked: "She walked to the park yesterday."{"\n\n"}
@@ -91,10 +91,10 @@ const GrambearLesson = () => {
                 <Text style={styles.highlight}>Irregular Verbs:{"\n\n"}</Text>
                 <Text style={styles.highlight}>Go</Text> <Icon name="arrow-forward" size={12} color="#5C6898"/> Went: "He went to the store."{"\n\n"}
                 <Text style={styles.highlight}>Ate</Text> <Icon name="arrow-forward" size={12} color="#5C6898"/> Ate: "We ate dinner at 7PM."{"\n\n"}
-                <Text style={styles.lessonSubHeading}>Usage Tips:</Text>{"\n\n"}
+                <Text style={darkMode ? styles.lessonSubHeadingDark : styles.lessonSubHeading}>Usage Tips:</Text>{"\n\n"}
                 • Use the <Text style={styles.highlight}>simple past</Text> for <Text style={styles.highlight}>specific past events</Text>. 
                 It's often accompanied by time expressions like yesterday, last week, or in 2010.{"\n\n"}
-                <Text style={styles.lessonSubHeading}>2. Past Continuous Tense</Text>{"\n\n"}
+                <Text style={darkMode ? styles.lessonSubHeadingDark : styles.lessonSubHeading}>2. Past Continuous Tense</Text>{"\n\n"}
                 The past continuous tense indicates actions that were <Text style={styles.highlight}>ongoing</Text> at
                 a specific time in the past. It is formed using <Text style={styles.highlight}>"was/were"</Text> 
                 + the present participle (<Text style={styles.highlight}>-ing</Text> form
@@ -102,46 +102,46 @@ const GrambearLesson = () => {
                 <Text style={styles.highlight}>Examples:</Text>{"\n\n"}
                 "She was <Text style={styles.underline}>studying</Text> when I called her."{"\n\n"}
                 "They were <Text style={styles.underline}>watching</Text> a movie at 8 PM."{"\n\n"}
-                <Text style={styles.lessonSubHeading}>Usage Tips:</Text>{"\n\n"}
+                <Text style={darkMode ? styles.lessonSubHeadingDark : styles.lessonSubHeading}>Usage Tips:</Text>{"\n\n"}
                 • This tense is useful for setting the scene or describing background actions that were happening while another action occurred.{"\n\n"}
-                <Text style={styles.lessonSubHeading}>3. Past Perfect Tense</Text>{"\n\n"}
+                <Text style={darkMode ? styles.lessonSubHeadingDark : styles.lessonSubHeading}>3. Past Perfect Tense</Text>{"\n\n"}
                 The past perfect tense is used to show that an action was <Text style={styles.highlight}>completed</Text> before 
                 another action took place in the past. It is formed using <Text style={styles.highlight}>"had" + past participle.</Text>{"\n\n"}
                 <Text style={styles.highlight}>Examples:</Text>{"\n\n"}
                 "They <Text style={styles.underline}>had left</Text> the party before it started to rain."{"\n\n"}
                 "She <Text style={styles.underline}>had finished</Text> her homework before going out."{"\n\n"}
-                <Text style={styles.lessonSubHeading}>Usage Tips:</Text>{"\n\n"}
+                <Text style={darkMode ? styles.lessonSubHeadingDark : styles.lessonSubHeading}>Usage Tips:</Text>{"\n\n"}
                 • This tense helps clarify the sequence of events and is often used when discussing multiple actions in the past.{"\n\n"}
-                <Text style={styles.summaryTitle}>Summary of Past Tense Forms</Text>
+                <Text style={darkMode ? styles.summaryTitleDark : styles.summaryTitle}>Summary of Past Tense Forms</Text>
           </Text>
 
-          <View style={styles.summaryContainer}>      
-                <View style={styles.summaryRow}>
-                  <Text style={styles.summaryCellHeading}>Tense</Text>
-                  <Text style={styles.summaryCellHeading}>Structure</Text>
-                  <Text style={[styles.summaryCellHeading, styles.lastCell]}>Example</Text>
+          <View style={darkMode ? styles.summaryContainerDark : styles.summaryContainer}>      
+                <View style={darkMode ? styles.summaryRowDark : styles.summaryRow}>
+                  <Text style={darkMode ? styles.summaryCellHeadingDark : styles.summaryCellHeading}>Tense</Text>
+                  <Text style={darkMode ? styles.summaryCellHeadingDark : styles.summaryCellHeading}>Structure</Text>
+                  <Text style={[darkMode ? styles.summaryCellHeadingDark : styles.summaryCellHeading, styles.lastCell]}>Example</Text>
                 </View>
                 </View>
-                <View style={styles.summaryContainer}>
-                <View style={styles.summaryRow}>
-                  <Text style={styles.summaryCell}>Simple Past</Text>
-                  <Text style={styles.summaryCell}>Verb + -ed (or irregular)</Text>
-                  <Text style={[styles.summaryCellHeading, styles.lastCell]}>"He ran to the store."</Text>
+                <View style={darkMode ? styles.summaryContainerDark : styles.summaryContainer}>
+                <View style={darkMode ? styles.summaryRowDark : styles.summaryRow}>
+                  <Text style={darkMode ? styles.summaryCellDark : styles.summaryCell}>Simple Past</Text>
+                  <Text style={darkMode ? styles.summaryCellDark : styles.summaryCell}>Verb + -ed (or irregular)</Text>
+                  <Text style={[darkMode ? styles.summaryCellHeadingDark : styles.summaryCellHeading, styles.lastCell]}>"He ran to the store."</Text>
                 </View>
-                <View style={styles.summaryRow}>
-                  <Text style={styles.summaryCell}>Past Continuous</Text>
-                  <Text style={styles.summaryCell}>Was/Were + Verb-ing</Text>
-                  <Text style={[styles.summaryCellHeading, styles.lastCell]}>"They were playing in the park."</Text>
+                <View style={darkMode ? styles.summaryRowDark : styles.summaryRow}>
+                  <Text style={darkMode ? styles.summaryCellDark : styles.summaryCell}>Past Continuous</Text>
+                  <Text style={darkMode ? styles.summaryCellDark : styles.summaryCell}>Was/Were + Verb-ing</Text>
+                  <Text style={[darkMode ? styles.summaryCellHeadingDark : styles.summaryCellHeading, styles.lastCell]}>"They were playing in the park."</Text>
                 </View>
-                <View style={styles.summaryRow}>
-                  <Text style={styles.summaryCell}>Past Perfect</Text>
-                  <Text style={styles.summaryCell}>Had + Past Participle</Text>
-                  <Text style={[styles.summaryCellHeading, styles.lastCell]}>"She had seen that movie before."</Text>
+                <View style={darkMode ? styles.summaryRowDark : styles.summaryRow}>
+                  <Text style={darkMode ? styles.summaryCellDark : styles.summaryCell}>Past Perfect</Text>
+                  <Text style={darkMode ? styles.summaryCellDark : styles.summaryCell}>Had + Past Participle</Text>
+                  <Text style={[darkMode ? styles.summaryCellHeadingDark : styles.summaryCellHeading, styles.lastCell]}>"She had seen that movie before."</Text>
                 </View>
             </View>
 
         {/* Using Link to navigate to QuizScreen */}
-        <Link href="/grambearCourse/grambearQuiz" style={styles.nextButton}>
+        <Link href="/grambearCourse/grambearQuiz" style={darkMode ? styles.nextButtonDark : styles.nextButton}>
           <Text style={styles.nextButtonText}>Take Quiz</Text>
         </Link>
         </ScrollView>
@@ -156,12 +156,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffe8f0',
   },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
   backButton: {
     position: 'absolute',
     top: 45,
     left: 20,
     padding: 10,
     backgroundColor: '#eac2cf',
+    borderRadius: 10,
+    zIndex: 10, // Ensure it's above the content
+  },
+  backButtonDark: {
+    position: 'absolute',
+    top: 45,
+    left: 20,
+    padding: 10,
+    backgroundColor: '#5C6898',
     borderRadius: 10,
     zIndex: 10, // Ensure it's above the content
   },
@@ -174,6 +187,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#eac2cf',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 100,
+    marginBottom: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  containerDark: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#5C6898',
     borderRadius: 10,
     margin: 20,
     marginTop: 100,
@@ -218,6 +246,27 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  titleDark: {
+    fontSize: 30,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#d1d5fa',
+    flex: 1,
+    textAlign: 'left',
+  },
+  lessonContainerDark: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#d1d5fa',
+    padding: 20,
+    marginBottom: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
   scrollContainer: {
     flex: 1,
   },
@@ -225,6 +274,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Quicksand-Regular',
     color: '#c67b88',
+    marginBottom: 10,
+    marginTop: -5,
+    margin: 10,
+  },
+  lessonTextDark: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Regular',
+    color: '#5C6898',
     marginBottom: 10,
     marginTop: -5,
     margin: 10,
@@ -255,6 +312,25 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '80%',
   },
+  lessonSubHeadingDark: {
+    fontSize: 20,
+    fontFamily: 'BarlowSemiCondensed-Bold',
+    color: '#5C6898',
+    marginTop: 15,
+    marginBottom: 5,
+    margin: 10,
+  },
+  nextButtonDark: {
+    backgroundColor: '#5C6898',
+    padding: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginTop: 20,
+    alignSelf: 'center',
+    width: '80%',
+  },
   nextButtonContent: {
     flexDirection: 'row', // Align text and icon horizontally
     alignItems: 'center', // Vertically center them
@@ -273,10 +349,23 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
+  summaryContainerDark: {
+    marginTop: 20,
+    backgroundColor: '#5C6898',
+    padding: 10,
+    borderRadius: 10,
+  },
   summaryTitle: {
     fontSize: 30,
     fontFamily: 'BarlowSemiCondensed-ExtraBold',
     color: '#c67b88',
+    flex: 1,
+    textAlign: 'center',
+  },
+  summaryTitleDark: {
+    fontSize: 30,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
     flex: 1,
     textAlign: 'center',
   },
@@ -290,38 +379,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#5C6898',
   },
-  summaryFirstRow: {
+  summaryRowDark: {
     flexDirection: 'row',
     padding: 5,
     marginVertical: 5,
-    backgroundColor: '#e7feff',
+    backgroundColor: '#d1d5fa',
     borderRadius: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
     borderColor: '#5C6898',
-    borderWidth: 1,
-  },
-  summarySecondRow: {
-    flexDirection: 'row',
-    padding: 5,
-    marginVertical: 5,
-    backgroundColor: '#ffe8f0',
-    borderRadius: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderColor: '#5C6898',
-    borderWidth: 1,
-  },
-  summaryThirdRow: {
-    flexDirection: 'row',
-    padding: 5,
-    marginVertical: 5,
-    backgroundColor: '#fff2d5',
-    borderRadius: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderColor: '#5C6898',
-    borderWidth: 1,
   },
   summaryCellHeading: {
     flex: 1,
@@ -343,6 +409,30 @@ const styles = StyleSheet.create({
     height: "115%",
     borderRightWidth: 1,
     borderRightColor: '#c67b88',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    textAlignVertical: 'center',
+  },
+  summaryCellHeadingDark: {
+    flex: 1,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    textAlign: 'center',
+    color: '#5C6898',
+    height: "125%",
+    paddingHorizontal: 10,
+    borderRightWidth: 1,
+    borderRightColor: '#5C6898',
+    paddingVertical: 5,
+    textAlignVertical: 'center',
+  },
+  summaryCellDark: {
+    flex: 1,
+    textAlign: 'center',
+    fontFamily: 'BarlowSemiCondensed-Medium',
+    color: '#5C6898',
+    height: "115%",
+    borderRightWidth: 1,
+    borderRightColor: '#5C6898',
     paddingHorizontal: 10,
     paddingVertical: 5,
     textAlignVertical: 'center',

@@ -17,7 +17,7 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 import { Link } from 'expo-router';
 
 const MothgramResult = () => {
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const router = useRouter();
   const navigation = useNavigation();
   const { score, questions: questionsStr, selectedOptions: selectedOptionsStr } = useLocalSearchParams();
@@ -39,22 +39,22 @@ const MothgramResult = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
 
       {/* Main content container */}
-      <View style={styles.container}>
+      <View style={darkMode ? styles.containerDark : styles.container}>
         <View style={styles.row}>
-          <Image source={designs.mothgrampink} style={styles.image} />
+          <Image source={darkMode ? designs.mothgram : designs.mothgrampink} style={styles.image} />
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Quiz Results</Text>
-            <Text style={styles.quizText}>
-              <Text style={styles.quizSubHeading}>Results Summary</Text>
+            <Text style={darkMode ? styles.titleDark : styles.title}>Quiz Results</Text>
+            <Text style={darkMode ? styles.quizTextDark : styles.quizText}>
+              <Text style={darkMode ? styles.quizSubHeadingDark : styles.quizSubHeading}>Results Summary</Text>
               {"\n"}Your score: {score}/{questions.length}
             </Text>
           </View>
         </View>
 
-        <View style={styles.questionContainer}>
+        <View style={darkMode ? styles.questionContainerDark : styles.questionContainer}>
         <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
           
 
@@ -62,8 +62,8 @@ const MothgramResult = () => {
           {questions.map((question) => {
             const selectedOptionId = selectedOptions[question.id];
             return (
-              <View key={question.id} style={styles.questionContainer}>
-                <Text style={styles.question}>{question.text}</Text>
+              <View key={question.id} style={darkMode ? styles.questionContainerDark : styles.questionContainer}>
+                <Text style={darkMode ? styles.questionDark : styles.question}>{question.text}</Text>
 
                 {question.options.map((option) => {
                   const isCorrect = option.correct;
@@ -81,7 +81,7 @@ const MothgramResult = () => {
                       <View style={styles.optionContent}>
                         <Text
                           style={[
-                            styles.optionText,
+                            darkMode  ? styles.optionTextDark : styles.optionText,
                             isSelected && !isCorrect ? styles.incorrectOptionText : null,
                             isCorrect ? styles.correctOptionText : null,
                           ]}
@@ -117,9 +117,9 @@ const MothgramResult = () => {
         </ScrollView>
         </View>
 
-          <TouchableOpacity style={styles.continueButton}>
+          <TouchableOpacity style={darkMode ? styles.continueButtonDark : styles.continueButton}>
             <Link href="/mothgramCourse/mothgramCongrats">
-              <Text style={styles.continueButtonText}>Next</Text>
+              <Text style={darkMode ? styles.continueButtonTextDark : styles.continueButtonText}>Next</Text>
             </Link>
           </TouchableOpacity>
       </View>
@@ -132,10 +132,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffeff7',
   },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
   container: {
     flex: 1,
     padding: 20,
     backgroundColor: '#eac2cf',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 60,
+    marginBottom: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  containerDark: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#5C6898',
     borderRadius: 10,
     margin: 20,
     marginTop: 60,
@@ -161,6 +180,15 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 5,
   },
+  questionContainerDark: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#d1d5fa',
+    padding: 10,
+    marginBottom: 5,
+  },
   image: {
     width: 80,
     height: 80,
@@ -173,12 +201,13 @@ const styles = StyleSheet.create({
     color: '#c67b88',
     textAlign: 'left',
   },
-  scrollContainer: {
-    flex: 1,
-    marginTop: 10,
-    width: '100%',
-    marginBottom: 10,
+  titleDark: {
+    fontSize: 30,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#d1d5fa',
+    textAlign: 'left',
   },
+
   
   quizText: {
     fontSize: 18,
@@ -191,19 +220,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Bold',
     color: '#c67b88',
   },
-  questionContainer: {
-    flex: 1,
-    width: '100%',
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    backgroundColor: '#ffeff7',
-    padding: 10,
-    marginBottom: 5,
-  },
   question: {
     fontSize: 18,
     fontFamily: 'Quicksand-Bold',
     color: '#c67b88',
+    marginBottom: 10,
+  },
+  quizTextDark: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Regular',
+    color: '#d1d5fa',
+    marginBottom: 10,
+  },
+  quizSubHeadingDark: {
+    fontSize: 20,
+    fontFamily: 'Quicksand-Bold',
+    color: '#d1d5fa',
+  },
+  questionDark: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Bold',
+    color: '#5C6898',
     marginBottom: 10,
   },
   option: {
@@ -222,6 +259,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Quicksand-Bold',
     color: '#c67b88',
+    flexShrink: 1,
+  },
+  optionTextDark: {
+    fontSize: 16,
+    fontFamily: 'Quicksand-Bold',
+    color: '#5C6898',
     flexShrink: 1,
   },
   correctOption: {
@@ -253,8 +296,24 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
   },
+  continueButtonDark: {
+    backgroundColor: '#d1d5fa',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    width: '45%',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
   continueButtonText: {
     color: '#ffeff7',
+    fontSize: 18,
+    fontFamily: 'BarlowSemiCondensed-Bold',
+  },
+  continueButtonTextDark: {
+    color: '#5C6898',
     fontSize: 18,
     fontFamily: 'BarlowSemiCondensed-Bold',
   },
@@ -267,6 +326,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: '100%',
   },
+  
 });
 
 export default MothgramResult

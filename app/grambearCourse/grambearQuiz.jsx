@@ -24,7 +24,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const GrambearQuiz = () => {
   const router = useRouter();
   const navigation = useNavigation();
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const [selectedOptions, setSelectedOptions] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -231,38 +231,38 @@ const GrambearQuiz = () => {
   };
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
 
       {/* Main content container */}
-      <View style={styles.container}>
+      <View style={darkMode ? styles.containerDark : styles.container}>
         <View style={styles.row}>
-          <Image source={designs.grambearpink} style={styles.image} />
-          <Text style={styles.title}>Understanding{"\n"}Past Tense Verbs</Text>
+          <Image source={darkMode ? designs.design10 : designs.grambearpink} style={styles.image} />
+          <Text style={darkMode ? styles.titleDark : styles.title}>Understanding{"\n"}Past Tense Verbs</Text>
         </View>
 
-        <View style={styles.questionContainer}>
+        <View style={darkMode ? styles.questionContainerDark : styles.questionContainer}>
         <ScrollView style={styles.scrollContainer}>
-          <Text style={styles.quizText}>
-            <Text style={styles.quizSubHeading}>Quiz - Past Tense Verbs</Text>
+          <Text style={darkMode ? styles.quizTextDark : styles.quizText}>
+            <Text style={darkMode ? styles.quizSubHeadingDark : styles.quizSubHeading}>Quiz - Past Tense Verbs</Text>
             {"\n"}Directions: Select the correct simple past verb.
           </Text>
 
           {/* Render quiz questions */}
           {questions.map((question) => (
-            <View key={question.id} style={styles.questionContainer}>
-              <Text style={styles.question}>{question.text}</Text>
+            <View key={question.id} style={darkMode ? styles.questionContainerDark : styles.questionContainer}>
+              <Text style={darkMode ? styles.questionDark : styles.question}>{question.text}</Text>
               {question.options.map((option) => (
                 <TouchableOpacity
                   key={option.id}
                   style={[
                     styles.option,
-                    selectedOptions[question.id] === option.id ? styles.selectedOption : null,
+                    selectedOptions[question.id] === option.id ? darkMode ? styles.selectedOptionDark : styles.selectedOption : null,
                   ]}
                   onPress={() => handleOptionSelect(question.id, option.id)}
                 >
                   <Text
                     style={[
-                      styles.optionText,
+                      darkMode ? styles.optionTextDark : styles.optionText,
                       selectedOptions[question.id] === option.id ? styles.selectedOptionText : null,
                     ]}
                   >
@@ -275,7 +275,7 @@ const GrambearQuiz = () => {
 
           {/* Submit button */}
           <TouchableOpacity
-            style={[styles.submitButton, !allQuestionsAnswered && styles.disabledButton]}
+            style={[darkMode ? styles.submitButtonDark : styles.submitButton, !allQuestionsAnswered && styles.disabledButton]}
             onPress={handleSubmit}
             disabled={!allQuestionsAnswered || isSubmitting}
           >
@@ -531,6 +531,82 @@ const styles = StyleSheet.create({
   activityIndicator: {
     marginLeft: 10,
   },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
+containerDark: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#5C6898',
+    borderRadius: 10,
+    margin: 20,
+    marginTop: 50,
+    marginBottom: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+  },
+titleDark: {
+    fontSize: 30,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#d1d5fa',
+    flex: 1,
+    textAlign: 'left',
+  },
+quizTextDark: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Regular',
+    color: '#5C6898',
+    marginBottom: 10,
+    marginTop: -5,
+    margin: 10,
+  },
+  quizSubHeadingDark: {
+    fontSize: 20,
+    fontFamily: 'BarlowSemiCondensed-Bold',
+    color: '#5C6898',
+    marginTop: 15,
+    marginBottom: 5,
+    margin: 10,
+  },
+  questionContainerDark: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#d1d5fa',
+    padding: 10,
+    marginBottom: 5,
+  },
+  questionDark: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Bold',
+    color: '#5C6898',
+    marginBottom: 10,
+  },
+  selectedOptionDark: {
+    backgroundColor: '#5C6898',
+  },
+  optionTextDark: {
+    fontSize: 16,
+    color: '#5C6898',
+    fontFamily: 'Quicksand-Bold',
+  },
+submitButtonDark: {
+    backgroundColor: '#5C6898',
+    justifyContent: 'center',
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    width: '60%',
+  },
+
 });
 
 export default GrambearQuiz;

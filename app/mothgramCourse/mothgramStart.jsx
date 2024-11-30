@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const MothgramStart = () => {
   const navigation = useNavigation();
-  const { user } = useGlobalContext();
+  const { user, darkMode } = useGlobalContext();
   const courseId = 'mothgramCourse';
   const lessonId = 'mothgramStart';
   const startTimeRef = useRef(null);
@@ -57,27 +57,27 @@ const MothgramStart = () => {
   };
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <SafeAreaView style={darkMode ? styles.wrapperDark : styles.wrapper}>
       {/* Back button positioned at the top left */}
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={darkMode ? styles.backButtonDark : styles.backButton}>
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
 
       {/* Main content */}
-      <View style={styles.container}>
+      <View style={darkMode ? styles.containerDark : styles.container}>
         {/* Icon and Lecture Title */}
-        <Image source={designs.mothgrampink} style={styles.icon} />
-        <Text style={styles.title}>Why do we use Past Tense in Narrative Texts?</Text>
+        <Image source={darkMode ? designs.mothgram : designs.mothgrampink} style={styles.icon} />
+        <Text style={darkMode ? styles.titleDark : styles.title}>Why do we use Past Tense in Narrative Texts?</Text>
 
         {/* Description */}
-        <Text style={styles.description}>
+        <Text style={darkMode ? styles.descriptionDark : styles.description}>
         In narrative writing, the past tense is commonly used to tell stories. This allows writers to describe events that have already happened, 
         helping readers engage with the plot and characters. 
         Understanding how to effectively use the past tense is essential for crafting compelling narratives.
         </Text>
 
         {/* Next button */}
-        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+        <TouchableOpacity onPress={handleNext} style={darkMode ? styles.nextButtonDark : styles.nextButton}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -90,12 +90,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffe8f0',
   },
+  wrapperDark: {
+    flex: 1,
+    backgroundColor: '#2e375b',
+  },
   backButton: {
     position: 'absolute',
     top: 45,
     left: 20,
     padding: 10,
     backgroundColor: '#eac2cf',
+    borderRadius: 10,
+    zIndex: 10,
+  },
+  backButtonDark: {
+    position: 'absolute',
+    top: 45,
+    left: 20,
+    padding: 10,
+    backgroundColor: '#5C6898',
     borderRadius: 10,
     zIndex: 10,
   },
@@ -111,6 +124,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 30,
     backgroundColor: '#fff7f9',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  containerDark: {
+    flex: 1,
+    padding: 20,
+    marginTop: 100,
+    marginHorizontal: 20,
+    marginBottom: 30,
+    backgroundColor: '#d1d5fa',
     borderRadius: 20,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -140,11 +169,36 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 20,
   },
+  titleDark: {
+    fontSize: 28,
+    fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    color: '#5C6898',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  descriptionDark: {
+    fontSize: 20,
+    fontFamily: 'Quicksand-Regular',
+    color: '#5C6898',
+    textAlign: 'left',
+    lineHeight: 24,
+    marginBottom: 20,
+  },
   highlight: {
     fontFamily: 'Quicksand-Bold',
   },
   nextButton: {
     backgroundColor: '#eac2cf',
+    padding: 5,
+    borderRadius: 15,
+    width: 150,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  nextButtonDark: {
+    backgroundColor: '#5C6898',
     padding: 5,
     borderRadius: 15,
     width: 150,
