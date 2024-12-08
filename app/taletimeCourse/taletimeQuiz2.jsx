@@ -20,6 +20,17 @@ import { useGlobalContext } from '../../context/GlobalProvider'; // For current 
 import { Link, useRouter } from 'expo-router';
 import { logTimeSpentOnCourse, updateLearningData, fetchLearningData } from '../../lib/appwrite';
 import { useFocusEffect } from '@react-navigation/native';
+
+const shuffleArray = (array) => {
+  return array
+    .map((item) => ({ ...item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((item) => {
+      delete item.sort;
+      return item;
+    });
+};
+
 const TaletimeQuiz2 = () => {
   const router = useRouter();
   const navigation = useNavigation();
@@ -29,6 +40,7 @@ const TaletimeQuiz2 = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [score, setScore] = useState(0); // To store the quiz score
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const courseId = 'taletimeCourse';
   const lessonId = 'taletimeQuiz2';
   const startTimeRef = useRef(null);
@@ -91,7 +103,7 @@ const TaletimeQuiz2 = () => {
     };
   }, []);
 
-  // Sample questions and options
+  useEffect(() => {
   const questions = [
     {
       id: 1,
@@ -143,8 +155,10 @@ const TaletimeQuiz2 = () => {
         { id: 4, text: 'It is an unimportant location.', correct: false },
       ],
     },
-    // Add more questions here...
   ];
+
+  setShuffledQuestions(shuffleArray(questions));
+  }, []);
 
   // Handle option selection for each question
   const handleOptionSelect = (questionId, optionId) => {
@@ -152,7 +166,7 @@ const TaletimeQuiz2 = () => {
   };
 
   // Check if all questions are answered
-  const allQuestionsAnswered = Object.keys(selectedOptions).length === questions.length;
+  const allQuestionsAnswered = Object.keys(selectedOptions).length === shuffledQuestions.length;
 
   // Handle quiz submission
   const handleSubmit = async () => {
@@ -166,7 +180,7 @@ const TaletimeQuiz2 = () => {
 
     try {
       // Calculate score
-      quizScore = questions.reduce((total, question) => {
+      quizScore = shuffledQuestions.reduce((total, question) => {
         const selectedOption = question.options.find((option) => option.id === selectedOptions[question.id]);
         return total + (selectedOption.correct ? 1 : 0);
       }, 0);
@@ -177,7 +191,7 @@ const TaletimeQuiz2 = () => {
       const xpEarned = quizScore * 10;
 
       // Save quiz score and update XP
-      await saveQuizScore(user.$id, 'taletimeCourse', 'taletimeQuiz2', quizScore, questions.length);
+      await saveQuizScore(user.$id, 'taletimeCourse', 'taletimeQuiz2', quizScore, shuffledQuestions.length);
       await addXPToUser(user.accountId, xpEarned);
 
       setModalVisible(true); // Show modal after successful submission
@@ -207,8 +221,7 @@ const TaletimeQuiz2 = () => {
             {"\n"}Directions: Choose the correct answer.
           </Text>
 
-          {/* Render quiz questions */}
-          {questions.map((question) => (
+          {shuffledQuestions.map((question) => (
             <View key={question.id} style={styles.questionContainer}>
               <Text style={styles.question}>{question.text}</Text>
               {question.options.map((option) => (
@@ -233,7 +246,6 @@ const TaletimeQuiz2 = () => {
             </View>
           ))}
 
-          {/* Submit button */}
           <TouchableOpacity
             style={[styles.submitButton, !allQuestionsAnswered && styles.disabledButton]}
             onPress={handleSubmit}
@@ -259,7 +271,7 @@ const TaletimeQuiz2 = () => {
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Good Job!</Text>
             <Icon name="checkmark-circle-outline" size={80} color="#5C6898" />
-            <Text style={styles.modalText}>You scored {score}/{questions.length}</Text>
+            <Text style={styles.modalText}>You scored {score}/{shuffledQuestions.length}</Text>
             <Text style={styles.modalText}>You earned {score * 10} Petals 🌸</Text>
 
             {/* See Answers button */}
@@ -267,7 +279,7 @@ const TaletimeQuiz2 = () => {
               pathname: '/taletimeCourse/taletimeResult2',
               params: {
                 score,
-                questions: JSON.stringify(questions),
+                shuffledQuestions: JSON.stringify(shuffledQuestions),
                 selectedOptions: JSON.stringify(selectedOptions),
               },
             }} onPress={() => setModalVisible(false)}

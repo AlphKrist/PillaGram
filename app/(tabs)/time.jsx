@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Link, router } from 'expo-router';
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { fetchLearningData } from "../../lib/appwrite";
+import { fetchLearningData, fetchQuizScore } from "../../lib/appwrite";
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,6 +26,8 @@ const Time = () => {
     const progressAnimation = useRef(new Animated.Value(0)).current;
     const [isDataFetched, setIsDataFetched] = useState(false);
     const lastProgressRef = useRef(0);
+    const [overallPercentage, setOverallPercentage] = useState(0);
+    const [courseScores, setCourseScores] = useState({});
     const tintColor = darkMode ? "#5c6898" : "#c67b88";
     const LEARNING_TIME_KEY = 'learningTime';
     const PROGRESS_KEY = 'progress';
@@ -60,6 +62,49 @@ const Time = () => {
     };
         loadLocalData();
     }, []);
+
+    useEffect(() => {
+        const calculateScores = async () => {
+            try {
+                const quizData = [
+                    { courseId: 'mothgramCourse', quizIds: ['mothgramQuiz'] },
+                    { courseId: 'grambearCourse', quizIds: ['grambearQuiz'] },
+                    { courseId: 'taletimeCourse', quizIds: ['taletimeQuiz', 'taletimeQuiz2'] },
+                    { courseId: 'storyCourse', quizIds: ['storyQuiz', 'storyQuiz2'] },
+                ];
+
+                let totalScore = 0;
+                let totalItems = 0;
+                const scoresByCourse = {};
+
+                for (const { courseId, quizIds } of quizData) {
+                    let courseScore = 0;
+                    let courseItems = 0;
+
+                    for (const quizId of quizIds) {
+                        const savedScore = await fetchQuizScore(user.$id, courseId, quizId);
+                        if (savedScore && typeof savedScore.score === 'number' && typeof savedScore.total_items === 'number') {
+                            courseScore += savedScore.score;
+                            courseItems += savedScore.total_items;
+                            totalScore += savedScore.score;
+                            totalItems += savedScore.total_items;
+                        }
+                    }
+                    if (courseItems > 0) {
+                        scoresByCourse[courseId] = (courseScore / courseItems) * 100;
+                    }
+                }
+
+                const overall = totalItems > 0 ? (totalScore / totalItems) * 100 : 0;
+                setOverallPercentage(overall);
+                setCourseScores(scoresByCourse);
+            } catch (error) {
+                console.error("Error calculating scores:", error);
+            }
+        };
+
+        calculateScores();
+    }, [user?.$id]);
 
     const animateLockUnlock = (opacityRef, isLocked) => {
         Animated.timing(opacityRef, {
@@ -164,7 +209,7 @@ const Time = () => {
                                 <Text style={darkMode ? styles.timeTextDark : styles.timeText}>
                                     {Math.floor(learningTime / 60)}m {learningTime % 60}s
                                 </Text>
-                                <Text style={darkMode ? styles.encouragementDark : styles.encouragement}>Keep going!</Text>
+                                <Text style={darkMode ? styles.encouragementDark : styles.encouragement}>Overall Quiz Score Percentage: <Text style={styles.overallQuizScore}>{Math.round(overallPercentage)}%</Text></Text>
                             </View>
                             <View style={styles.progressContainer}>
                                 <AnimatedCircularProgress
@@ -207,8 +252,10 @@ const Time = () => {
                                         
                                     </View>
                                     <Text style={darkMode ? styles.courseTitleDark : styles.courseTitle}>MothGram</Text>
+                                    <Text style={darkMode ? styles.quizScoreDark : styles.quizScore}>Quiz Score: {Math.round(courseScores['mothgramCourse'] || 0)}%</Text>
                                     <View style={styles.progressBarContainer}>
                                         <View style={darkMode ? styles.progressBarFillDark(mothgramData.progress || 0) : styles.progressBarFill(mothgramData.progress || 0)} />
+                                        <Text style={styles.progressText}>{Math.round(mothgramData.progress || 0)}%</Text>
                                     </View>
                                     {isPostTestLocked && !isPreTestCompleted && (
                                         <Animated.View style={styles.overlay} />
@@ -229,8 +276,10 @@ const Time = () => {
                                         
                                     </View>
                                     <Text style={darkMode ? styles.courseTitleDark : styles.courseTitle}>TaleTime</Text>
+                                    <Text style={darkMode ? styles.quizScoreDark : styles.quizScore}>Quiz Score: {Math.round(courseScores['taletimeCourse'] || 0)}%</Text>
                                     <View style={styles.progressBarContainer}>
                                         <View style={darkMode ? styles.progressBarFillDark(taletimeData.progress || 0) : styles.progressBarFill(taletimeData.progress || 0)} />
+                                        <Text style={styles.progressText}>{Math.round(taletimeData.progress || 0)}%</Text>
                                     </View>
                                     {isPostTestLocked && !isPreTestCompleted && (
                                     <Animated.View style={styles.overlay} />
@@ -327,16 +376,16 @@ const styles = StyleSheet.create({
         fontFamily: 'BarlowSemiCondensed-ExtraBold',
     },
     encouragement: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#c67b88',
         marginBottom: 5,
-        fontFamily: 'PPTelegraf-Regular',
+        fontFamily: 'BarlowSemiCondensed-Regular',
     },
     encouragementDark: {
-        fontSize: 14,
-        color: '#979caf',
+        fontSize: 16,
+        color: '#5C6898',
         marginBottom: 5,
-        fontFamily: 'PPTelegraf-Regular',
+        fontFamily: 'BarlowSemiCondensed-Regular',
     },
     button: {
         backgroundColor: '#fff',
@@ -459,10 +508,20 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontFamily: 'BarlowSemiCondensed-ExtraBold',
         color: '#c67b88',
-        marginBottom: 10,
     },
     courseTitleDark: {
         fontSize: 30,
+        fontFamily: 'BarlowSemiCondensed-ExtraBold',
+        color: '#5C6898',
+    },
+    quizScore: {
+        fontSize: 16,
+        fontFamily: 'BarlowSemiCondensed-ExtraBold',
+        color: '#c67b88',
+        marginBottom: 10,
+    },
+    quizScoreDark: {
+        fontSize: 16,
         fontFamily: 'BarlowSemiCondensed-ExtraBold',
         color: '#5C6898',
         marginBottom: 10,
@@ -566,6 +625,17 @@ const styles = StyleSheet.create({
         fontFamily: 'BarlowSemiCondensed-Bold',
         fontSize: 16,
     },
+    progressText: {
+        position: 'absolute',
+        alignSelf: 'center',
+        top: -1, // Adjust the value as needed to vertically align the text
+        fontSize: 10,
+        color: '#ffffff',
+        fontFamily: 'BarlowSemiCondensed-Bold',
+    },
+    overallQuizScore: {
+        fontFamily: 'BarlowSemiCondensed-ExtraBold',
+    }
 });
 
 export default Time;

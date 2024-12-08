@@ -21,10 +21,10 @@ const TaletimeResult = () => {
   const { user } = useGlobalContext();
   const router = useRouter();
   const navigation = useNavigation();
-  const { score, questions: questionsStr, selectedOptions: selectedOptionsStr } = useLocalSearchParams();
+  const { score, shuffledQuestions: questionsStr, selectedOptions: selectedOptionsStr } = useLocalSearchParams();
 
   // Parse the JSON strings into objects
-  const questions = JSON.parse(questionsStr);
+  const shuffledQuestions = JSON.parse(questionsStr);
   const selectedOptions = JSON.parse(selectedOptionsStr);
   useEffect(() => {
     const handleBackPress = () => {
@@ -50,7 +50,7 @@ const TaletimeResult = () => {
             <Text style={styles.title}>Quiz Results</Text>
             <Text style={styles.quizText}>
               <Text style={styles.quizSubHeading}>Results Summary</Text>
-              {"\n"}Your score: {score}/{questions.length}
+              {"\n"}Your score: {score}/{shuffledQuestions.length}
             </Text>
           </View>
         </View>
@@ -60,7 +60,7 @@ const TaletimeResult = () => {
           
 
           {/* Render quiz questions with results */}
-          {questions.map((question) => {
+          {shuffledQuestions.map((question) => {
             const selectedOptionId = selectedOptions[question.id];
             return (
               <View key={question.id} style={styles.questionContainer}>

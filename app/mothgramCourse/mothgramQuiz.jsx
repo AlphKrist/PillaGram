@@ -21,6 +21,16 @@ import { Link, useRouter } from 'expo-router';
 import { logTimeSpentOnCourse, updateLearningData, fetchLearningData } from '../../lib/appwrite';
 import { useFocusEffect } from '@react-navigation/native';
 
+const shuffleArray = (array) => {
+  return array
+    .map((item) => ({ ...item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((item) => {
+      delete item.sort;
+      return item;
+    });
+};
+
 const MothgramQuiz = () => {
   const router = useRouter();
   const navigation = useNavigation();
@@ -30,6 +40,7 @@ const MothgramQuiz = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [quizInProgressModal, setQuizInProgressModal] = useState(false);
   const [score, setScore] = useState(0); // To store the quiz score
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const courseId = 'mothgramCourse';
   const lessonId = 'mothgramQuiz';
   const startTimeRef = useRef(null);
@@ -91,7 +102,7 @@ const MothgramQuiz = () => {
     };
   }, []);
 
-  // Sample questions and options
+  useEffect(() => {
   const questions = [
     {
       id: 1,
@@ -193,8 +204,10 @@ const MothgramQuiz = () => {
         { id: 4, text: 'was, felt, helped', correct: false },
       ],
     },
-    // Add more questions here...
   ];
+
+  setShuffledQuestions(shuffleArray(questions));
+  }, []);
 
   // Handle option selection for each question
   const handleOptionSelect = (questionId, optionId) => {
@@ -202,7 +215,7 @@ const MothgramQuiz = () => {
   };
 
   // Check if all questions are answered
-  const allQuestionsAnswered = Object.keys(selectedOptions).length === questions.length;
+  const allQuestionsAnswered = Object.keys(selectedOptions).length === shuffledQuestions.length;
 
   // Handle quiz submission
   const handleSubmit = async () => {
@@ -216,7 +229,7 @@ const MothgramQuiz = () => {
 
     try {
       // Calculate score
-      quizScore = questions.reduce((total, question) => {
+      quizScore = shuffledQuestions.reduce((total, question) => {
         const selectedOption = question.options.find((option) => option.id === selectedOptions[question.id]);
         return total + (selectedOption.correct ? 1 : 0);
       }, 0);
@@ -227,7 +240,7 @@ const MothgramQuiz = () => {
       const xpEarned = quizScore * 10;
 
       // Save quiz score and update XP
-      await saveQuizScore(user.$id, 'mothgramCourse', 'mothgramQuiz', quizScore, questions.length);
+      await saveQuizScore(user.$id, 'mothgramCourse', 'mothgramQuiz', quizScore, shuffledQuestions.length);
       await addXPToUser(user.accountId, xpEarned);
 
       setModalVisible(true); // Show modal after successful submission
@@ -257,7 +270,7 @@ const MothgramQuiz = () => {
           </Text>
 
           {/* Render quiz questions */}
-          {questions.map((question) => (
+          {shuffledQuestions.map((question) => (
             <View key={question.id} style={darkMode ? styles.questionContainerDark : styles.questionContainer}>
               <Text style={darkMode ? styles.questionDark : styles.question}>{question.text}</Text>
               {question.options.map((option) => (
@@ -308,7 +321,7 @@ const MothgramQuiz = () => {
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Good Job!</Text>
             <Icon name="checkmark-circle-outline" size={80} color="#5C6898" />
-            <Text style={styles.modalText}>You scored {score}/{questions.length}</Text>
+            <Text style={styles.modalText}>You scored {score}/{shuffledQuestions.length}</Text>
             <Text style={styles.modalText}>You earned {score * 10} Petals 🌸</Text>
 
             <Link
@@ -316,7 +329,7 @@ const MothgramQuiz = () => {
             pathname: '/mothgramCourse/mothgramResult',
             params: {
               score,
-              questions: JSON.stringify(questions),
+              shuffledQuestions: JSON.stringify(shuffledQuestions),
               selectedOptions: JSON.stringify(selectedOptions),
             },
             }}

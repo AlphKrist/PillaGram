@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { designs } from '../../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useAppwrite from "../../lib/useAppwrite";
-import { fetchLearningData } from "../../lib/appwrite";
+import { fetchLearningData, fetchQuizScore } from "../../lib/appwrite";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { useNavigation } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -17,6 +17,8 @@ const Courses = () => {
     const [taletimeData, setTaletimeData] = useState({});
     const [storyData, setStoryData] = useState({});
     const [grambearData, setGrambearData] = useState({});
+    const [overallPercentage, setOverallPercentage] = useState(0);
+    const [courseScores, setCourseScores] = useState({});
     const navigation = useNavigation();
     const animateLockUnlock = (opacityRef, isLocked) => {
         Animated.timing(opacityRef, {
@@ -65,6 +67,48 @@ const Courses = () => {
         }
     };
 
+    useEffect(() => {
+        const calculateScores = async () => {
+            try {
+                const quizData = [
+                    { courseId: 'mothgramCourse', quizIds: ['mothgramQuiz'] },
+                    { courseId: 'grambearCourse', quizIds: ['grambearQuiz'] },
+                    { courseId: 'taletimeCourse', quizIds: ['taletimeQuiz', 'taletimeQuiz2'] },
+                    { courseId: 'storyCourse', quizIds: ['storyQuiz', 'storyQuiz2'] },
+                ];
+
+                let totalScore = 0;
+                let totalItems = 0;
+                const scoresByCourse = {};
+
+                for (const { courseId, quizIds } of quizData) {
+                    let courseScore = 0;
+                    let courseItems = 0;
+
+                    for (const quizId of quizIds) {
+                        const savedScore = await fetchQuizScore(user.$id, courseId, quizId);
+                        if (savedScore && typeof savedScore.score === 'number' && typeof savedScore.total_items === 'number') {
+                            courseScore += savedScore.score;
+                            courseItems += savedScore.total_items;
+                            totalScore += savedScore.score;
+                            totalItems += savedScore.total_items;
+                        }
+                    }
+                    if (courseItems > 0) {
+                        scoresByCourse[courseId] = (courseScore / courseItems) * 100;
+                    }
+                }
+
+                const overall = totalItems > 0 ? (totalScore / totalItems) * 100 : 0;
+                setOverallPercentage(overall);
+                setCourseScores(scoresByCourse);
+            } catch (error) {
+                console.error("Error calculating scores:", error);
+            }
+        };
+
+        calculateScores();
+    }, [user?.$id]);
 
     const handleBackPress = () => {
         navigation.goBack();
@@ -98,8 +142,10 @@ const Courses = () => {
                                         <Image source={designs.mothgram} style={styles.courseIcon} />
                                     </View>
                                     <Text style={styles.courseTitle}>MothGram</Text>
+                                    <Text style={darkMode ? styles.quizScoreDark : styles.quizScore}>Quiz Score: {Math.round(courseScores['mothgramCourse'] || 0)}%</Text>
                                     <View style={styles.progressBarContainer}>
                                         <View style={styles.progressBarFill(mothgramData.progress || 0)} />
+                                        <Text style={styles.progressText}>{Math.round(mothgramData.progress || 0)}%</Text>
                                     </View>
                                     {isPostTestLocked && !isPreTestCompleted && (
                                         <Animated.View style={styles.overlay} />
@@ -119,8 +165,10 @@ const Courses = () => {
                                         <Image source={designs.taletime} style={styles.courseIcon} />
                                     </View>
                                     <Text style={styles.courseTitle}>TaleTime</Text>
+                                    <Text style={darkMode ? styles.quizScoreDark : styles.quizScore}>Quiz Score: {Math.round(courseScores['taletimeCourse'] || 0)}%</Text>
                                     <View style={styles.progressBarContainer}>
                                         <View style={styles.progressBarFill(taletimeData.progress || 0)} />
+                                        <Text style={styles.progressText}>{Math.round(taletimeData.progress || 0)}%</Text>
                                     </View>
                                     {isPostTestLocked && !isPreTestCompleted && (
                                         <Animated.View style={styles.overlay} />
@@ -140,8 +188,10 @@ const Courses = () => {
                                         <Image source={designs.design10} style={styles.grambearIcon} />
                                     </View>
                                     <Text style={styles.courseTitle}>GramBear</Text>
+                                    <Text style={darkMode ? styles.quizScoreDark : styles.quizScore}>Quiz Score: {Math.round(courseScores['grambearCourse'] || 0)}%</Text>
                                     <View style={styles.progressBarContainer}>
                                         <View style={styles.progressBarFill(grambearData.progress || 0)} />
+                                        <Text style={styles.progressText}>{Math.round(grambearData.progress || 0)}%</Text>
                                     </View>
                                     {isPostTestLocked && !isPreTestCompleted && (
                                         <Animated.View style={styles.overlay} />
@@ -161,8 +211,11 @@ const Courses = () => {
                                         <Image source={designs.taletime} style={styles.courseIcon} />
                                     </View>
                                     <Text style={styles.courseTitle}>Story</Text>
+                                    <Text style={darkMode ? styles.quizScoreDark : styles.quizScore}>Quiz Score: {Math.round(courseScores['storyCourse'] || 0)}%</Text>
                                     <View style={styles.progressBarContainer}>
                                         <View style={styles.progressBarFill(storyData.progress || 0)} />
+                                        <Text style={styles.progressText}>{Math.round(storyData.progress || 0)}%</Text>
+                                        
                                     </View>
                                     {isPostTestLocked && !isPreTestCompleted && (
                                         <Animated.View style={styles.overlay} />
@@ -336,7 +389,6 @@ const styles = StyleSheet.create({
         fontFamily: 'BarlowSemiCondensed-ExtraBold',
         color: '#5C6898',
         textAlign: 'center',
-        marginBottom: 10,
     },
     courseLevel: {
         fontSize: 14,
@@ -376,6 +428,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 13,
+    },
+    progressText: {
+        position: 'absolute',
+        alignSelf: 'center',
+        top: -1, // Adjust the value as needed to vertically align the text
+        fontSize: 10,
+        color: '#ffffff',
+        fontFamily: 'BarlowSemiCondensed-Bold',
+    },
+    quizScore: {
+        fontSize: 16,
+        fontFamily: 'BarlowSemiCondensed-ExtraBold',
+        color: '#5C6898',
+        marginBottom: 10,
+    },
+    quizScoreDark: {
+        fontSize: 16,
+        fontFamily: 'BarlowSemiCondensed-ExtraBold',
+        color: '#5C6898',
+        marginBottom: 10,
     },
 });
 
